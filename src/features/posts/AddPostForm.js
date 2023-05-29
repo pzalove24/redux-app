@@ -1,10 +1,10 @@
 import React from 'react'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { nanoid } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux'
+import { useState } from 'react';
+import { useDispatch , useSelector} from 'react-redux';
+
 
 import { postAdded } from './postsSlice'
+import { selectAllUsers } from '../users/usersSlice';
 
 const AddPostForm = () => {
     const dispatch = useDispatch()
@@ -13,7 +13,7 @@ const AddPostForm = () => {
     const [content, setContent] = useState('')
     const [userId, setUserId] = useState('')
 
-    // const users = useSelector(selectAllUsers)
+    const users = useSelector(selectAllUsers)
 
     const onTitleChanged = e => setTitle(e.target.value)
     const onContentChanged = e => setContent(e.target.value)
@@ -31,11 +31,11 @@ const AddPostForm = () => {
 
     const canSave = Boolean(title) && Boolean(content) && Boolean(userId)
 
-    // const usersOptions = users.map(user => (
-    //     <option key={user.id} value={user.id}>
-    //         {user.name}
-    //     </option>
-    // ))
+    const usersOptions = users.map(user => (
+        <option key={user.id} value={user.id}>
+            {user.name}
+        </option>
+    ))
 
     return (
         <section>
@@ -52,7 +52,7 @@ const AddPostForm = () => {
                 <label htmlFor="postAuthor">Author:</label>
                 <select id="postAuthor" value={userId} onChange={onAuthorChanged}>
                     <option value=""></option>
-                    {/* {usersOptions} */}
+                    {usersOptions}
                 </select>
                 <label htmlFor="postContent">Content:</label>
                 <textarea
